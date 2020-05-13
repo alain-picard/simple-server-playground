@@ -1,6 +1,6 @@
 (ns simple-server.simple-game)
 
-;; Creating a map for a game, consisting of the number to guess and the number of guesses remain
+;; Creating a map for a game, consisting of the number to guess and the number of guesses remains
 (def game-in-progress (atom {:number nil
                              :guesses nil}))
 
