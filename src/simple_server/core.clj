@@ -47,8 +47,8 @@
                           (status 400))
     :game-over        (response (format "Sorry, %s, you have guessed more than 5 times. Game over." username))
     :win              (response (format "Congratulations %s! You win!" username))
-    :too-low          (response (format "Too low and you have %s chances left." (- 6 (game/get-times game/game-in-progress username))))
-    :too-high         (response (format "Too high and you have %s chances left." (- 6 (game/get-times game/game-in-progress username))))))
+    :too-low          (response (format "Too low and you have %s chances left." (- 5 (game/get-times game/game-in-progress username))))
+    :too-high         (response (format "Too high and you have %s chances left." (- 5 (game/get-times game/game-in-progress username))))))
 
 (defroutes game-routes
   (POST "/login"    [username]                                                           (login-handler username))

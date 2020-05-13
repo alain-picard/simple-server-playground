@@ -2,7 +2,7 @@
 
 Guessing game implemented by Yunfeng Song will let you guess a number generated ramdomly from 1~10. 
 In each round, you will have 6 chances to guess the number. Every time you try but fail to guess the correct number, 
-the system will tell you whether it is too high or too low. If you fail to guess the correct number after 6 times,
+the system will tell you whether it is too high or too low. If you fail to guess the correct number after 5 times,
 you will never know the correct number and game status will be reset.
 
 Hint: try to think of yourself as a program which is doing binary search algorithm. Good luck.

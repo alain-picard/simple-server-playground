@@ -35,7 +35,7 @@
       ;;you have to start a new game before guessing.
       (nil? value) :game-not-started
 
-      (or (> times 5) (and (= times 5) (not= guess value)))
+      (or (> times 4) (and (= times 4) (not= guess value)))
       (do (reset-game game-in-progress name)
           :game-over)
 
