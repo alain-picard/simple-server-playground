@@ -5,7 +5,7 @@ In each round, you will have 6 chances to guess the number. Every time you try b
 the system will tell you whether it is too high or too low. If you fail to guess the correct number after 6 times,
 you will never know the correct number and game status will be reset.
 
-Hint: try to think of yourself as a program which is doing binary search algorthom. Good luck.
+Hint: try to think of yourself as a program which is doing binary search algorithm. Good luck.
 
 ** Usage
 
@@ -17,7 +17,7 @@ Should start a server listening on [[http://localhost:3001]]
 
 ** URLs
 
-You cannot use your web brower to test it, But you may use Postman or other tools to test this applicaton.
+You may not be able to use your web brower to test it, But you can use Postman or other tools to play with it.
 
 - 1. Login: /login?username=balabalaba
 
