@@ -16,19 +16,20 @@
 
 (defn new-game-handler []
   (when (game/new-game!)
-    (response "OK- start guessing at /guess")))
+    (response "OK- start guessing at /guess?guess=x")))
 
 (defn guess-handler [guess]
   (condp = (game/guess-answer guess)
     nil       (-> (response  "You need to supply a guess with /guess?guess=N")
                   (status 400))
-    :game-over (response  "Congratulations! You win!")
-    :too-low   (response "Too low.")
-    :too-high  (response  "Too high.")))
+    :you-win (response "Congratulations! You win man! Play again at /new-game")
+    :you-lose  (response "Sorry, you ran out of guesses man. It's GAME OVER! Play again at /new-game")
+    :too-low   (response (str "Too low man. " (get-in @game/game-in-progress [:guesses]) " guesses left."))
+    :too-high  (response (str "Too high man. " (get-in @game/game-in-progress [:guesses]) " guesses left."))))
 
 (defroutes game-routes
-  (GET "/new-game" []                 (new-game-handler))
-  (GET "/guess"    [guess :<< as-int] (guess-handler guess))
+  (GET "/new-game" []                 (assoc-in (new-game-handler) [:headers "Content-type"] "text/html"))
+  (GET "/guess"    [guess :<< as-int] (assoc-in (guess-handler guess) [:headers "Content-type"] "text/html"))
   (ANY "*"         []                 (not-found "Sorry, No such URI on this server!")))
 
 (def handler
