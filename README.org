@@ -8,19 +8,20 @@ Guess the Number is a backend server game written in Clojure.
 
 You should have Clojure installed on your machine, go to the following link for instructions:
 
->[https://clojure.org/guides/getting_started](https://clojure.org/guides/getting_started)
+*[[https://clojure.org/guides/getting_started][https://clojure.org/guides/getting_started]]*
 
 You will also need leiningen: A build automation and dependency management tool for Clojure.
 
->[https://leiningen.org/](https://leiningen.org/)
+*[[https://leiningen.org/][https://leiningen.org/]]*
 
 *** Running the game
 
 From your terminal, navigate to the directory where the this folder (simple-server-playground) resides, then run the following command:
 
-````
+#+BEGIN_SRC 
 lein repl
-````
+#+END_SRC
+
 This should start a server listening on [http://localhost:3001](http://localhost:3001).
 
 ** Usage
@@ -30,27 +31,27 @@ You will have 5 tries in guessing a randomly generated number between 1-10.
 
 *** Starting the game
 
-````
+#+BEGIN_SRC 
 /new-game # Starts a new game
-````
+#+END_SRC
 *** Playing the game
 
-````
+#+BEGIN_SRC
 /guess?guess=x # Replace x with a number between 1-10
 
 "Too low man. x guesses left" # Returns when your guess is too low, and x tells the number of guesses you have left.
 
 "Too high man. x guesses left" # Returns when your guess is too high, and x tells the number of guesses you have left.
-````
+#+END_SRC
 
 *** Ending the game
 
-````
+#+BEGIN_SRC
 "Congratulations! You win man! Play again at /new-game" # Returns when you guessed the number within 5 guesses.
 
 "Sorry, you ran out of guesses man. It's GAME OVER! Play again at /new-game" # Returns when you used all 5 guesses.
-````
+#+END_SRC
 
 
 ** License
-[MIT](https://choosealicense.com/licenses/mit/)
+*[[https://choosealicense.com/licenses/mit/][MIT]]*
