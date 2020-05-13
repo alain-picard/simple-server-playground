@@ -45,7 +45,7 @@
                           (status 400))
     :game-not-started (-> (response "You need to start the game with /new-game first.")
                           (status 400))
-    :game-over        (response (format "Sorry, %s, you have guessed more than 5 times. Game over." username))
+    :game-over        (response (format "Sorry, %s, you have guessed 5 times. Game over." username))
     :win              (response (format "Congratulations %s! You win!" username))
     :too-low          (response (format "Too low and you have %s chances left." (- 5 (game/get-times game/game-in-progress username))))
     :too-high         (response (format "Too high and you have %s chances left." (- 5 (game/get-times game/game-in-progress username))))))
