@@ -17,7 +17,7 @@ Should start a server listening on [[http://localhost:3001]]
 
 ** URLs
 
-You may not be able to use your web brower to test it, But you can use Postman or other tools to play with it.
+You may not be able to use your web brower to play with it, But you can use Postman or other tools.
 
 - 1. Login: /login?username=balabalaba
 
