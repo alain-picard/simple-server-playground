@@ -16,9 +16,12 @@
 ;;; and our "http code".  Our game now lives in its own namespace, and
 ;;; is fully testable independent of our "presentation layer".
 
-(def users-info (atom {}))
+(def users-info
+  "Store all users' login information"
+  (atom {}))
 
 (defn login?
+  "Check if a user has logged in"
   [user-collection user]
   (@user-collection user))
 
@@ -50,8 +53,8 @@
 (defroutes game-routes
   (POST "/login"    [username]                                                           (login-handler username))
   (POST "/new-game" {{{username :value} "session_id"} :cookies}                          (if (login? users-info username) (new-game-handler username) (response "Please login first.")))
-  (PUT "/guess"    {{{username :value} "session_id"} :cookies {guess :guess} :params}   (if (login? users-info username) (guess-handler username (edn/read-string guess)) (response "Please login first.")))
-  (ANY "*"         []                                                                   (not-found "Sorry, No such URI on this server!")))
+  (PUT "/guess"     {{{username :value} "session_id"} :cookies {guess :guess} :params}   (if (login? users-info username) (guess-handler username (edn/read-string guess)) (response "Please login first.")))
+  (ANY "*"         []                                                                    (not-found "Sorry, No such URI on this server!")))
 
 (defn content-type-middleware
   [handler]
