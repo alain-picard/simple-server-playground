@@ -1,9 +1,13 @@
-* Simple Server
+* Guessing game
 
-A toy repository to demonstrate important concepts in building
-an HTTP api service in clojure.
+Guessing game implemented by Yunfeng Song will let you guess a number generated ramdomly from 1~10. 
+In each round, you will have 5 chances to guess the number. Every time you try but fail to guess the correct number, 
+the system will tell you whether it is too high or too low. If you fail to guess the correct number after 5 times,
+you will never know the correct number and game status will be reset.
 
-* Usage
+Hint: try to think of yourself as a program which is doing binary search algorithm. Good luck.
+
+** Usage
 
   #+begin_src shell
 lein repl  
@@ -11,17 +15,20 @@ lein repl
 
 Should start a server listening on [[http://localhost:3001]]
 
-By moving from git tag to git tag, you should see the evolution
-of the code.
+** URLs
 
-** Tags
+You may not be able to use your web brower to play with it, But you can use Postman or other tools.
 
- - starting-point
- - request-methods
- - manual-dispatching
- - compojure-routing
- - http-ring-responses
- - destructuring-routes
- - understanding-middlewares
- - using-middleware-and-destructured-routes
- - separation-of-concerns
+- 1. Login: /login?username=balabalaba
+
+    You have to login first before you can play. The example above is using balabalaba as username to login.
+
+- 2. Start new game: /new-game
+
+    No parameter required, but when you login the application for the first time you have to run this before start guessing.
+
+- 3. Guess a number: /guess?guess=1
+
+    After you start a new game you can start guessing. The example above is guessing 1 is the correct number.
+
+
