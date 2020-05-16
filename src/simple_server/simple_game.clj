@@ -1,30 +1,31 @@
 (ns simple-server.simple-game)
 
-;; Creating a map for a game, consisting of the number to guess and the number of guesses remains
-(def game-in-progress (atom {:number nil
-                             :guesses nil}))
+;; Creating a map for a game, consisting of the number to guess and the number of guesses remains for a given user
+(def games-in-progress (atom {}))
 
-(defn new-game! []
+(defn new-game! [account]
   ;; Make our new game: Generate a random number and resetting the number of guesses to 5
   (do
-    (swap! game-in-progress assoc-in [:number] (+ 1 (rand-int 10)))
-    (swap! game-in-progress assoc-in [:guesses] 5)
+    (swap! games-in-progress assoc account [(+ 1 (rand-int 10)) 5])
     :ok))
 
-(defn guess-answer [guess]
+(defn guess-answer [account guess]
   (do
-    (swap! game-in-progress update-in [:guesses] dec)
-    (cond
-      (nil? guess) nil
-      
-      (= 0 (:guesses @game-in-progress))
-      :you-lose
+    (swap! games-in-progress update-in [account 1] dec)
+    (let [user-num (get-in @games-in-progress [account 0])
+          user-guesses (get-in @games-in-progress [account 1])]
+      (cond
+        (nil? guess) nil
 
-      (= guess (:number @game-in-progress))
-      :you-win
+        (= guess user-num)
+        :you-win
+        
+        (= 0 user-guesses)
+        :you-lose
 
-      (< guess (:number @game-in-progress))
-      :too-low
+        (< guess user-num)
+        :too-low
 
-      (> guess (:number @game-in-progress))
-      :too-high)))
+        (> guess user-num)
+        :too-high))))
+
