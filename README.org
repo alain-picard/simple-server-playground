@@ -8,107 +8,75 @@ Guess the Number is a backend server game written in Clojure.
 
 You should have Clojure installed on your machine, go to the following link for instructions:
 
-<<<<<<< Updated upstream
 *[[https://clojure.org/guides/getting_started][https://clojure.org/guides/getting_started]]*
 
 You will also need leiningen: A build automation and dependency management tool for Clojure.
 
 *[[https://leiningen.org/][https://leiningen.org/]]*
-=======
-- [https://clojure.org/guides/getting_started](https://clojure.org/guides/getting_started)
 
-You will also need leiningen: A build automation and dependency management tool for Clojure.
-
-- [https://leiningen.org/](https://leiningen.org/)
->>>>>>> Stashed changes
 
 *** Running the game
 
 From your terminal, navigate to the directory where the this folder (simple-server-playground) resides, then run the following command:
 
-#+BEGIN_SRC 
+#+BEGIN_SRC
 lein repl
-<<<<<<< Updated upstream
 #+END_SRC
 
 This should start a server listening on [http://localhost:3001](http://localhost:3001).
-=======
-```
-This should start a server listening on [http://localhost:3001](http://localhost:3001)
->>>>>>> Stashed changes
 
 ** Usage
 
 *** Instructions
 You will have 5 tries in guessing a randomly generated number between 1-10.
 
-<<<<<<< Updated upstream
+*** Before playing the game
+
+#+BEGIN_SRC
+/landing ;; This is the landing page of the game, it consists information on how to sign-up and log-in
+#+END_SRC
+
+*** Sign up for the game
+
+#+BEGIN_SRC
+/sign-up?account="your account" ;; This signs user up for the game
+#+END_SRC
+
+*** log in for the game
+
+#+BEGIN_SRC
+/log-in?account="your account" ;; User can only play the game after logging in, and can only log in after signing up
+#+END_SRC
+
+*** User homepage
+
+#+BEGIN_SRC
+/"your account" ;; This is the homepage of a user, contains instructions on how to start the game
+#+END_SRC
+
 *** Starting the game
 
-#+BEGIN_SRC 
-/new-game # Starts a new game
+#+BEGIN_SRC
+/"you account"/new-game ;; This starts a new guessing game, with a newly generated number and 5 guesses remaining
 #+END_SRC
+
 *** Playing the game
 
 #+BEGIN_SRC
-/guess?guess=x # Replace x with a number between 1-10
-=======
-### Before playing the game
+/"your account"/guess?guess=x ;; Replace x with a number between 1-10
 
-```clojure
-/landing # This is the landing page of the game, it consists information on how to sign-up and log-in
-```
+"Too low 'your account'. x guesses left" ;; Returns when your guess is too low, and x tells the number of guesses you have left.
 
-### Sign up for the game
-```
-/sign-up?account="your account" # This signs user up for the game
-```
-
-### log in for the game
-```
-/log-in?account="your account" # User can only play the game after logging in, and can only log in after signing up
-```
-### User homepage
-```
-/"your account" # This is the homepage of a user, contains instructions on how to start the game
-```
-
-### Starting the game
-
-```
-/"you account"/new-game # This starts a new guessing game, with a newly generated number and 5 guesses remaining
-```
-### Playing the game
-
-```
-/"your account"/guess?guess=x # Replace x with a number between 1-10
->>>>>>> Stashed changes
-
-"Too low 'your account'. x guesses left" # Returns when your guess is too low, and x tells the number of guesses you have left.
-
-<<<<<<< Updated upstream
-"Too high man. x guesses left" # Returns when your guess is too high, and x tells the number of guesses you have left.
+"Too high 'your account'. x guesses left" ;; Returns when your guess is too high, and x tells the number of guesses you have left.
 #+END_SRC
-=======
-"Too high 'your account'. x guesses left" # Returns when your guess is too high, and x tells the number of guesses you have left.
-```
->>>>>>> Stashed changes
 
 *** Ending the game
 
-<<<<<<< Updated upstream
 #+BEGIN_SRC
-"Congratulations! You win man! Play again at /new-game" # Returns when you guessed the number within 5 guesses.
+"Congratulations! You win 'your account'! Play again at /'your account'/new-game" ;; Returns when you guessed the number within 5 guesses.
 
-"Sorry, you ran out of guesses man. It's GAME OVER! Play again at /new-game" # Returns when you used all 5 guesses.
+"Sorry, you ran out of guesses man. It's GAME OVER! Play again at /'your account'/new-game" ;; Returns when you used up all 5 guesses.
 #+END_SRC
-=======
-```
-"Congratulations! You win 'your account'! Play again at /'your account'/new-game" # Returns when you guessed the number within 5 guesses.
-
-"Sorry, you ran out of guesses man. It's GAME OVER! Play again at /'your account'/new-game" # Returns when you used up all 5 guesses.
-```
->>>>>>> Stashed changes
 
 
 ** License
