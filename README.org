@@ -14,7 +14,6 @@ You will also need leiningen: A build automation and dependency management tool 
 
 *[[https://leiningen.org/][https://leiningen.org/]]*
 
-
 *** Running the game
 
 From your terminal, navigate to the directory where the this folder (simple-server-playground) resides, then run the following command:
@@ -33,51 +32,55 @@ You will have 5 tries in guessing a randomly generated number between 1-10.
 *** Before playing the game
 
 #+BEGIN_SRC
-/landing ;; This is the landing page of the game, it consists information on how to sign-up and log-in
+/landing ; This is the landing page of the game, it consists information on how to sign-up and log-in
 #+END_SRC
 
 *** Sign up for the game
-
 #+BEGIN_SRC
-/sign-up?account="your account" ;; This signs user up for the game
+/sign-up?account="your account" ; This signs user up for the game
 #+END_SRC
 
 *** log in for the game
-
 #+BEGIN_SRC
-/log-in?account="your account" ;; User can only play the game after logging in, and can only log in after signing up
+/log-in?account="your account" ; User can only play the game after logging in, and can only log in after signing up
 #+END_SRC
 
 *** User homepage
-
 #+BEGIN_SRC
-/"your account" ;; This is the homepage of a user, contains instructions on how to start the game
+;; You will be prompted differently according to your game status
+/"your account" ; This is the homepage of a user, contains instructions on how to start the game
 #+END_SRC
 
 *** Starting the game
 
 #+BEGIN_SRC
-/"you account"/new-game ;; This starts a new guessing game, with a newly generated number and 5 guesses remaining
+/"you account"/new-game ; This starts a new guessing game, with a newly generated number and 5 guesses remaining
 #+END_SRC
 
 *** Playing the game
 
 #+BEGIN_SRC
-/"your account"/guess?guess=x ;; Replace x with a number between 1-10
+/"your account"/guess?guess=x ; Replace x with a number between 1-10
 
-"Too low 'your account'. x guesses left" ;; Returns when your guess is too low, and x tells the number of guesses you have left.
+"Too low 'your account'. x guesses left" ; Returns when your guess is too low, and x tells the number of guesses you have left.
 
-"Too high 'your account'. x guesses left" ;; Returns when your guess is too high, and x tells the number of guesses you have left.
+"Too high man. x guesses left" ; Returns when your guess is too high, and x tells the number of guesses you have left.
 #+END_SRC
 
 *** Ending the game
 
 #+BEGIN_SRC
-"Congratulations! You win 'your account'! Play again at /'your account'/new-game" ;; Returns when you guessed the number within 5 guesses.
+"Congratulations! You win man! Play again at /new-game" ; Returns when you guessed the number within 5 guesses.
 
-"Sorry, you ran out of guesses man. It's GAME OVER! Play again at /'your account'/new-game" ;; Returns when you used up all 5 guesses.
+"Sorry, you ran out of guesses man. It's GAME OVER! Play again at /new-game" ; Returns when you used all 5 guesses.
 #+END_SRC
 
+*** Logging out
+
+#+BEGIN_SRC
+/logout?account="your account" ; This ends the game
+"See you soon"
+#+END_SRC
 
 ** License
 *[[https://choosealicense.com/licenses/mit/][MIT]]*
