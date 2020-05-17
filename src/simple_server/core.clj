@@ -10,28 +10,38 @@
 
             [ring.mock.request :as mock]
             [simple-server.simple-game :as game]
-            [clojure.edn :as edn]))
+            [clojure.edn :as edn]
+
+            [amazonica.aws.dynamodbv2 :as dynamo]))
 
 ;;; Finally, let us truly separate concerns between our "application code"
 ;;; and our "http code".  Our game now lives in its own namespace, and
 ;;; is fully testable independent of our "presentation layer".
 
-(def users-info
-  "Store all users' login information"
-  (atom {}))
+(def cred {:access-key "5qklzr"
+           :secret-key "16ibz"
+           :endpoint "http://localhost:4566"})
 
 (defn login?
   "Check if a user has logged in"
-  [user-collection user]
-  (@user-collection user))
+  [user]
+  (let [{user-info :item} (dynamo/get-item cred
+                                           :table-name "guess-game"
+                                           :key {:pk {:s (str "USER#" user)}
+                                                 :sk {:s (str "#METADATA#" user)}})]
+    (and user-info (:login user-info))))
 
 (defn login
-  [user-collection user]
-  (swap! user-collection assoc user true))
+  [user]
+  (dynamo/put-item cred
+                   :table-name "guess-game"
+                   :item {:pk (str "USER#" user)
+                          :sk (str "#METADATA#" user)
+                          :login true}))
 
 (defn login-handler
   [username]
-  (login users-info username)
+  (login username)
   (-> (response (format "Welcome to the guessing game! %s" username))
       (assoc :cookies {"session_id" {:value username}})))
 
@@ -47,14 +57,14 @@
                           (status 400))
     :game-over        (response (format "Sorry, %s, you have guessed 5 times. Game over." username))
     :win              (response (format "Congratulations %s! You win!" username))
-    :too-low          (response (format "Too low and you have %s chances left." (- 5 (game/get-times game/game-in-progress username))))
-    :too-high         (response (format "Too high and you have %s chances left." (- 5 (game/get-times game/game-in-progress username))))))
+    :too-low          (response (format "Too low and you have %s chances left." (- 5 (game/get-times username))))
+    :too-high         (response (format "Too high and you have %s chances left." (- 5 (game/get-times username))))))
 
 (defroutes game-routes
   (POST "/login"    [username]                                                           (login-handler username))
-  (POST "/new-game" {{{username :value} "session_id"} :cookies}                          (if (login? users-info username) (new-game-handler username) (response "Please login first.")))
-  (PUT "/guess"     {{{username :value} "session_id"} :cookies {guess :guess} :params}   (if (login? users-info username) (guess-handler username (edn/read-string guess)) (response "Please login first.")))
-  (ANY "*"         []                                                                    (not-found "Sorry, No such URI on this server!")))
+  (POST "/new-game" {{{username :value} "session_id"} :cookies}                          (if (login? username) (new-game-handler username) (response "Please login first.")))
+  (PUT "/guess"     {{{username :value} "session_id"} :cookies {guess :guess} :params}   (if (login? username) (guess-handler username (edn/read-string guess)) (response "Please login first.")))
+  (ANY "*"          []                                                                   (not-found "Sorry, No such URI on this server!")))
 
 (defn content-type-middleware
   [handler]
@@ -78,5 +88,4 @@
   (run-jetty #'handler {:port 3001 :join? false}))
 
 :core
-
 
