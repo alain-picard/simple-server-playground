@@ -25,6 +25,12 @@
                  [hiccup "1.0.5"]
 
                  [ring/ring-mock "0.3.0"]
-                 [ring/ring-devel "1.5.0"]]
+                 [ring/ring-devel "1.5.0"]
+                 
+                 ;; Database
+                 [com.amazonaws/aws-java-sdk-dynamodb "1.11.659"]
+                 [amazonica "0.3.152" :exclusions [com.amazonaws/aws-java-sdk
+                                                   com.amazonaws/amazon-kinesis-client
+                                                   com.amazonaws/dynamodb-streams-kinesis-adapter]]]
 
   :repl-options {:init-ns simple-server.core})
