@@ -16,6 +16,7 @@
 ;; refer lesson 8 solution
 
 (defn login-handler
+  "Displays a form for user registration"
   []
   (response
    (html
@@ -24,7 +25,8 @@
       [:h1 "Please enter your name to play the game"]
       [:input {:type :text :name :username}]]])))
 
-(defn successful-login-handle 
+(defn successful-login-handle
+  "Sets username value to cookies authentication"
   [username]
   (-> (redirect "/new-game.html")
       (set-cookie "auth" username)))
@@ -40,6 +42,7 @@
         [:a {:href "/guess.html"} "here"]]]))))
 
 (defn guess-handler
+  "Returns the result of a guess"
   [guess username]
   (let [form [:div
               [:h1 "Enter your guess"]
@@ -59,7 +62,11 @@
                         [:h1 "You must login first"]
                         [:a {:href "login.html"} "Login here"]])]))))
 
-(defn ensure-auth-cookie [handler]
+(defn ensure-auth-cookie 
+  "Checks authentication value in cookies
+  if that value exists, sets it to username
+  otherwise, refuses to start the game"
+  [handler]
   (fn [request]
     (if-let [cookie (get-in request [:cookies "auth"])]
       (handler (-> request
