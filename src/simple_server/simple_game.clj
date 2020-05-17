@@ -1,53 +1,74 @@
-(ns simple-server.simple-game)
+(ns simple-server.simple-game
+  (:require [amazonica.aws.dynamodbv2 :as dynamo]))
 
-
-(def game-in-progress (atom {}))
+(def cred {:access-key "5qklzr"
+           :secret-key "16ibz"
+           :endpoint "http://localhost:4566"})
 
 (defn reset-game
   "Reset the game status for a user."
-  [game-data username]
-  (swap! game-data assoc username {:value (+ 1 (rand-int 10)) :times 0}))
+  [username]
+  (dynamo/put-item cred
+                   :table-name "guess-game"
+                   :item {:pk (str "GAME#" username "1")
+                          :sk (str "USER#" username)
+                          :value (+ 1 (rand-int 10))
+                          :times 0}))
 
 (defn get-value
   "Return the value for this round for a user."
-  [game-data username]
-  (get-in @game-data [username :value]))
+  [username]
+  (let [{user-info :item} (dynamo/get-item cred
+                                           :table-name "guess-game"
+                                           :key {:pk {:s (str "GAME#" username "1")}
+                                                 :sk {:s (str "USER#" username)}})]
+    (and user-info (:value user-info))))
 
 (defn get-times
   "Return the number of guessing that a user has done."
-  [game-data username]
-  (get-in @game-data [username :times]))
+  [username]
+  (let [{user-info :item} (dynamo/get-item cred
+                                           :table-name "guess-game"
+                                           :key {:pk {:s (str "GAME#" username "1")}
+                                                 :sk {:s (str "USER#" username)}})]
+    (and user-info (:times user-info))))
 
 (defn inc-times
-  [game-data username]
-  (swap! game-data update-in [username :times] #(inc %)))
+  [username]
+  (dynamo/update-item cred
+                      :table-name "guess-game"
+                      :key {:pk {:s (str "GAME#" username "1")}
+                            :sk {:s (str "USER#" username)}}
+                      :update-expression "ADD #times :val"
+                      :expression-attribute-names {"#times" "times"}
+                      :expression-attribute-values {":val" 1}))
 
 (defn new-game! [name]
   ;; Make our new game:
-  (reset-game game-in-progress name)
+  (reset-game name)
   :ok)
 
 (defn guess-answer
   [name guess]
-  (let [value (get-value game-in-progress name) times (get-times game-in-progress name)]
+  (let [value (get-value name) times (get-times name)]
     (cond
       (or (nil? guess) (not= java.lang.Long (type guess))) nil
       ;;you have to start a new game before guessing.
       (nil? value) :game-not-started
 
       (or (> times 4) (and (= times 4) (not= guess value)))
-      (do (reset-game game-in-progress name)
+      (do (reset-game name)
           :game-over)
 
       (= guess value)
-      (do (reset-game game-in-progress name)
+      (do (reset-game name)
           :win)
 
       (< guess value)
-      (do (inc-times game-in-progress name)
+      (do (inc-times name)
           :too-low)
 
       (> guess value)
-      (do (inc-times game-in-progress name)
+      (do (inc-times name)
           :too-high))))
 
