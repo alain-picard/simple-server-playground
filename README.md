@@ -24,7 +24,7 @@ java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb
 
 The database should start on port 8000
 
-In lein repl, run the following code block from `src/simple-server/database.clj` to create a table in DynamoDB database
+In lein repl, run the following code block from `src/simple-server/database.clj` to create `GuessingGame` table in DynamoDB database. This table will be used to store all data from our game. 
 
 ```clojure
 ;;;;;;;;;;;;;;;;;;;;;;;;
