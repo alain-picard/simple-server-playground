@@ -29,7 +29,7 @@ This should start a server listening on [http://localhost:3001](http://localhost
 *** Instructions
 You will have 5 tries in guessing a randomly generated number between 1-10.
 
-### Before playing the game
+*** Before playing the game
 
 #+BEGIN_SRC
 /landing ; This is the landing page of the game, it consists information on how to sign-up and log-in
