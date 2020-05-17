@@ -20,7 +20,6 @@ From your terminal, navigate to the directory where the this folder (simple-serv
 
 #+BEGIN_SRC
 lein repl
-<<<<<<< Updated upstream
 #+END_SRC
 
 This should start a server listening on [http://localhost:3001](http://localhost:3001).
@@ -36,29 +35,29 @@ You will have 5 tries in guessing a randomly generated number between 1-10.
 /landing ; This is the landing page of the game, it consists information on how to sign-up and log-in
 #+END_SRC
 
-### Sign up for the game
+*** Sign up for the game
 #+BEGIN_SRC
 /sign-up?account="your account" ; This signs user up for the game
 #+END_SRC
 
-### log in for the game
+*** log in for the game
 #+BEGIN_SRC
 /log-in?account="your account" ; User can only play the game after logging in, and can only log in after signing up
 #+END_SRC
 
-### User homepage
+*** User homepage
 #+BEGIN_SRC
+;; You will be prompted differently according to your game status
 /"your account" ; This is the homepage of a user, contains instructions on how to start the game
-; You will also be prompted differently according to your game status
 #+END_SRC
 
-### Starting the game
+*** Starting the game
 
 #+BEGIN_SRC
 /"you account"/new-game ; This starts a new guessing game, with a newly generated number and 5 guesses remaining
 #+END_SRC
 
-### Playing the game
+*** Playing the game
 
 #+BEGIN_SRC
 /"your account"/guess?guess=x ; Replace x with a number between 1-10
@@ -79,7 +78,8 @@ You will have 5 tries in guessing a randomly generated number between 1-10.
 *** Logging out
 
 #+BEGIN_SRC
-"See you soon" ; This ends the game
+/logout?account="your account" ; This ends the game
+"See you soon"
 #+END_SRC
 
 ** License
